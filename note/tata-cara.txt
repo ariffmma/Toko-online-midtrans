@@ -1,0 +1,74 @@
+livewire
+	composer require livewire/livewire
+
+ui
+	composer require laravel/ui
+
+bootstrap
+	php artisan ui bootstrap --auth
+
+npm install, npm  run dev
+
+turbolink (resource>views>layout>app.blade.php : 
+	<livewire:script/>	
+	<script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false">\ </script>
+
+
+database
+user: 
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->integer('level');
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->rememberToken();
+            $table->timestamps();
+belanja
+            $table->id();
+            $table->integer('user_id');
+            $table->integer('produk_id');
+            $table->integer('total_harga');
+            $table->integer('status');
+            $table->timestamps();
+produk
+            $table->id();
+            $table->string('nama');
+            $table->string('gambar');
+            $table->integer('harga');
+            $table->integer('berat');
+            $table->timestamps();
+
+app/providers/routeserviceprovider/ home ''
+
+php artisan make:livewire Home
+
+Route::get('/',\App\Http\Livewire\Home::class);
+
+app/http/livewire/home php   
+			return view('livewire.home')->extends('layouts.app')->section('content');
+
+resources/views/layouts/app.blade.php
+                        @if (Auth::user())
+                            @if(Auth::user()->level == 0)
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('belanja') }}">{{ 'belanja anda' }}</a>
+                            </li>
+                            @endif
+                        @endif
+
+resources/views/livewire/home
+
+php artisan make:livewire TambahProduk
+
+Route::get('/TambahProduk',\App\Http\Livewire\TambahProduk::class);
+
+app/http/livewire/TambahProduk.php
+        		return view('livewire.tambah-produk')->extends('layouts.app')->section('content');
+
+resources/views/livewire/tambah-produk
+app/moddel/produk/ fillable
+
+config/filesystem.php
+
+php artisan storage:link
